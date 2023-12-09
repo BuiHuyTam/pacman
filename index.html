@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas></canvas>
+
+    <!-- ========= -->
+    <form>
+      <textarea id="yourcode" cols="40" rows="10" style="margin-left: 200px">
+import turtle
+
+t = turtle.Turtle()
+t.forward(100)
+
+print "Hello World" 
+</textarea
+      ><br />
+      <button type="button" onclick="runit()">Run</button>
+    </form>
+    <pre id="output"></pre>
+    <!-- If you want turtle graphics include a canvas -->
+    <div id="mycanvas"></div>
+    <!-- ========= -->
+
+    <script src="index.js"></script>
+    <script src="js/skulpt-dist-master/skulpt.min.js"></script>
+    <script src="js/skulpt-dist-master/skulpt-stdlib.js"></script>
+    <script src="controller/script.js"></script>
+    <script src="controller/python.js"></script>
+  </body>
+</html>

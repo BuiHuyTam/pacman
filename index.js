@@ -6,15 +6,17 @@ canvas.height = innerHeight;
 class Boundary {
   static width = 40;
   static height = 40;
-  constructor({ position }) {
+  constructor({ position, image }) {
     this.position = position;
     this.width = 40;
     this.height = 40;
+    this.image = image;
   }
 
   draw() {
-    c.fillStyle = "blue";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    // c.fillStyle = "blue";
+    // c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    c.drawImage(this.image, this.position.x, this.position.y);
   }
 }
 
@@ -60,7 +62,24 @@ class Player {
   }
 }
 
+class Pallet {
+  constructor({ position }) {
+    this.position = position;
+    this.radius = 3;
+  }
+
+  draw() {
+    c.beginPath();
+    c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2);
+    c.fillStyle = "white";
+    c.fill();
+    c.closePath;
+  }
+}
+
+const pallets = []
 const boundaries = [];
+
 const player = new Player({
   position: {
     x: Boundary.width + Boundary.width / 2,
@@ -89,12 +108,22 @@ const keys = {
 
 let lastKey = "";
 const map = [
-  ["-", "-", "-", "-", "-", "-", "-"],
-  ["-", " ", " ", " ", " ", " ", "-"],
-  ["-", " ", "-", " ", "-", " ", "-"],
-  ["-", " ", " ", " ", " ", " ", "-"],
-  ["-", "-", "-", "-", "-", "-", "-"],
+  ["1", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "2"],
+  ["|", ".", ".", "b", ".", ".", ".", "b", "b", "b", "b", ".", ".", ".", "b", "b", "|"],
+  ["|", "b", ".", "b", ".", "b", ".", "b", "b", "b", "b", ".", "b", ".", ".", "b", "|"],
+  ["|", "b", ".", "b", ".", "b", ".", ".", ".", ".", "b", ".", "b", "b", ".", "b", "|"],
+  ["|", "b", ".", "b", ".", "b", "b", "b", "b", ".", "b", ".", "b", "b", ".", "b", "|"],
+  ["|", "b", ".", "b", ".", "b", "b", "b", "b", ".", ".", ".", "b", "b", ".", "b", "|"],
+  ["|", "b", ".", "b", ".", "b", "b", "b", "b", "b", "b", "b", "b", "b", ".", "b", "|"],
+  ["|", "b", ".", ".", ".", "b", "b", "b", "b", "b", "b", "b", "b", "b", ".", ".", "|"],
+  ["4", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "3"],
 ];
+function createImage(src) {
+  const image = new Image();
+  image.src = src;
+  return image;
+}
+
 map.forEach((row, i) =>
   row.forEach((symbol, j) => {
     switch (symbol) {
@@ -104,6 +133,89 @@ map.forEach((row, i) =>
             position: {
               x: Boundary.width * j,
               y: Boundary.height * i,
+            },
+            image: createImage("./image/pipeHorizontal.png"),
+          })
+        );
+        break;
+      // case 2
+      case "|":
+        boundaries.push(
+          new Boundary({
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i,
+            },
+            image: createImage("./image/pipeVertical.png"),
+          })
+        );
+        break;
+      // case 3
+      case "1":
+        boundaries.push(
+          new Boundary({
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i,
+            },
+            image: createImage("./image/pipeCorner1.png"),
+          })
+        );
+        break;
+      // case 4
+      case "2":
+        boundaries.push(
+          new Boundary({
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i,
+            },
+            image: createImage("./image/pipeCorner2.png"),
+          })
+        );
+        break;
+
+      case "3":
+        boundaries.push(
+          new Boundary({
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i,
+            },
+            image: createImage("./image/pipeCorner3.png"),
+          })
+        );
+        break;
+
+      case "4":
+        boundaries.push(
+          new Boundary({
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i,
+            },
+            image: createImage("./image/pipeCorner4.png"),
+          })
+        );
+        break;
+
+      case "b":
+        boundaries.push(
+          new Boundary({
+            position: {
+              x: Boundary.width * j,
+              y: Boundary.height * i,
+            },
+            image: createImage("./image/block.png"),
+          })
+        );
+        break;
+      case ".":
+        pallets.push(
+          new Pallet({
+            position: {
+              x: j * Boundary.width + Boundary.width / 2,
+              y: i * Boundary.height + Boundary.height / 2,
             },
           })
         );
@@ -115,13 +227,13 @@ map.forEach((row, i) =>
 function circleCollidesWithRectangle({ circle, rectangle }) {
   return (
     circle.position.y - circle.radius + circle.velocity.y <=
-      rectangle.position.y + rectangle.height &&
+    rectangle.position.y + rectangle.height &&
     circle.position.x + circle.radius + circle.velocity.x >=
-      rectangle.position.x &&
+    rectangle.position.x &&
     circle.position.y + circle.radius + circle.velocity.y >=
-      rectangle.position.y &&
+    rectangle.position.y &&
     circle.position.x - circle.radius + circle.velocity.x <=
-      rectangle.position.x + rectangle.width
+    rectangle.position.x + rectangle.width
   );
 }
 
@@ -164,9 +276,17 @@ function animate() {
     player.velocity.x = 5;
   }
 
+  for (let i = pallets.length - 1; 0 < i; i--) {
+    const pallet = pallets[i]
+    pallet.draw()
+    if (Math.hypot(pallet.position.x - player.position.x, pallet.position.y - player.position.y) < pallet.radius + player.radius) {
+      console.log("touching")
+      pallets.splice(i, 1)
+    }
+  }
+
   boundaries.forEach((boundary) => {
     boundary.draw();
-
     if (
       circleCollidesWithRectangle({
         circle: player,
@@ -185,6 +305,11 @@ function animate() {
 
 animate();
 player.update();
+
+if (pallets.length === 0) {
+  console.log("You win");
+  window.alert("You win")
+}
 
 addEventListener("keydown", ({ key }) => {
   console.log(key);
@@ -244,5 +369,4 @@ addEventListener("keyup", ({ key }) => {
       //   player.move_right();
       break;
   }
-  console.log(player.velocity);
 });

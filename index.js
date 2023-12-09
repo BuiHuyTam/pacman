@@ -311,62 +311,62 @@ if (pallets.length === 0) {
   window.alert("You win")
 }
 
-addEventListener("keydown", ({ key }) => {
-  console.log(key);
-  switch (key) {
-    case "w":
-      keys.w.pressed = true;
-      lastKey = "w";
-      //   player.velocity.y = -5;
-      //   player.move_up();
-      break;
-    case "a":
-      keys.a.pressed = true;
-      lastKey = "a";
+// addEventListener("keydown", ({ key }) => {
+//   console.log(key);
+//   switch (key) {
+//     case "w":
+//       keys.w.pressed = true;
+//       lastKey = "w";
+//       //   player.velocity.y = -5;
+//       //   player.move_up();
+//       break;
+//     case "a":
+//       keys.a.pressed = true;
+//       lastKey = "a";
 
-      //   player.velocity.x = -5;
-      //   player.move_left();
-      break;
-    case "s":
-      keys.s.pressed = true;
-      lastKey = "s";
+//       //   player.velocity.x = -5;
+//       //   player.move_left();
+//       break;
+//     case "s":
+//       keys.s.pressed = true;
+//       lastKey = "s";
 
-      //   player.velocity.y = 5;
-      //   player.move_down();
-      break;
-    case "d":
-      keys.d.pressed = true;
-      lastKey = "d";
+//       //   player.velocity.y = 5;
+//       //   player.move_down();
+//       break;
+//     case "d":
+//       keys.d.pressed = true;
+//       lastKey = "d";
 
-      //   player.velocity.x = 5;
-      //   player.move_right();
-      break;
-  }
-  console.log(player.velocity);
-});
+//       //   player.velocity.x = 5;
+//       //   player.move_right();
+//       break;
+//   }
+//   console.log(player.velocity);
+// });
 
-addEventListener("keyup", ({ key }) => {
-  console.log(key);
-  switch (key) {
-    case "w":
-      keys.w.pressed = false;
-      //   player.velocity.y = 0;
-      //   player.move_up();
-      break;
-    case "a":
-      keys.a.pressed = false;
-      //   player.velocity.x = 0;
-      //   player.move_left();
-      break;
-    case "s":
-      keys.s.pressed = false;
-      //   player.velocity.y = 0;
-      //   player.move_down();
-      break;
-    case "d":
-      keys.d.pressed = false;
-      //   player.velocity.x = 0;
-      //   player.move_right();
-      break;
-  }
-});
+// addEventListener("keyup", ({ key }) => {
+//   console.log(key);
+//   switch (key) {
+//     case "w":
+//       keys.w.pressed = false;
+//       //   player.velocity.y = 0;
+//       //   player.move_up();
+//       break;
+//     case "a":
+//       keys.a.pressed = false;
+//       //   player.velocity.x = 0;
+//       //   player.move_left();
+//       break;
+//     case "s":
+//       keys.s.pressed = false;
+//       //   player.velocity.y = 0;
+//       //   player.move_down();
+//       break;
+//     case "d":
+//       keys.d.pressed = false;
+//       //   player.velocity.x = 0;
+//       //   player.move_right();
+//       break;
+//   }
+// });

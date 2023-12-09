@@ -1,7 +1,7 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+canvas.width = 64 * 16;
+canvas.height = 64 * 9;
 
 class Boundary {
   static width = 40;
